@@ -1,0 +1,10 @@
+[
+  { "id": "scavenger", "name": "Scavenger", "desc": "Picks through the wreckage.", "produces": { "scrap": 0.35 } },
+  { "id": "grower",    "name": "Grower",    "desc": "Tends the grow tents. Output follows the season.", "produces": { "food": 0.8 }, "seasonal": "farm" },
+  { "id": "scholar",   "name": "Scholar",   "desc": "Studies the planet and the wreck.", "produces": { "data": 0.2 }, "requires": { "buildings": { "terminal": 1 } } },
+  { "id": "miner",     "name": "Miner",     "desc": "Cuts ore from the crater wall.", "produces": { "ore": 0.3 }, "requires": { "research": ["prospecting"] } },
+  { "id": "harvester", "name": "Harvester", "desc": "Scrapes lichen from the vents.", "produces": { "biomass": 0.3 }, "requires": { "research": ["lichen"] } },
+  { "id": "icecutter", "name": "Ice Cutter","desc": "Saws blocks from the glacier.", "produces": { "ice": 0.35 }, "requires": { "research": ["cryo"] } },
+  { "id": "engineer",  "name": "Engineer",  "desc": "Keeps the machines honest. +4% converter yield and +3% craft bonus each.", "effects": [ { "key": "convYield", "add": 0.04 }, { "key": "craft", "add": 0.03 } ], "requires": { "research": ["engineering"] } },
+  { "id": "medic",     "name": "Medic",     "desc": "+15% population growth and -15% losses each.", "effects": [ { "key": "growth", "add": 0.15 }, { "key": "attrition", "add": -0.15 } ], "requires": { "research": ["medicine"] } }
+]

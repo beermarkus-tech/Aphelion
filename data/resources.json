@@ -1,0 +1,15 @@
+[
+  { "id": "food",     "name": "Food",          "tier": "need",      "cap": 250, "desc": "Feeds survivors. Runs out and people leave." },
+  { "id": "scrap",    "name": "Scrap",         "tier": "raw",       "cap": 150, "desc": "Wreckage from the crash and the dead city around it." },
+  { "id": "ore",      "name": "Ore",           "tier": "raw",       "cap": 150, "desc": "Iron-rich rock from the crater walls." },
+  { "id": "biomass",  "name": "Biomass",       "tier": "raw",       "cap": 150, "desc": "Lichen mats scraped from the thermal vents." },
+  { "id": "ice",      "name": "Ice",           "tier": "raw",       "cap": 150, "desc": "Dirty glacial ice. Water, oxygen, fuel." },
+  { "id": "metal",    "name": "Metal",         "tier": "refined",   "cap": 60,  "desc": "Smelted from ore and fuel." },
+  { "id": "fuel",     "name": "Fuel",          "tier": "refined",   "cap": 60,  "desc": "Distilled from biomass or split from ice." },
+  { "id": "polymer",  "name": "Polymer",       "tier": "refined",   "cap": 60,  "desc": "Plastic sheeting cooked from biomass and fuel." },
+  { "id": "glass",    "name": "Glass",         "tier": "refined",   "cap": 60,  "desc": "Fused scrap silica." },
+  { "id": "circuits", "name": "Circuits",      "tier": "component", "cap": null, "desc": "Hand-etched logic boards." },
+  { "id": "alloy",    "name": "Alloy Plates",  "tier": "component", "cap": null, "desc": "Layered, heat-treated plating." },
+  { "id": "core",     "name": "Reactor Cores", "tier": "component", "cap": null, "desc": "The heart of something much larger." },
+  { "id": "data",     "name": "Data",          "tier": "science",   "cap": 60,  "desc": "Observations, notes, measurements. Spent on research." }
+]

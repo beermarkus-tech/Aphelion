@@ -1,0 +1,44 @@
+[
+  { "id": "derelict", "title": "Derelict pod", "chance": 0.25,
+    "text": "A scout spots a second escape pod half-buried in the dunes. Its beacon is still blinking.",
+    "requires": { "pop": 5 },
+    "choices": [
+      { "label": "Strip it for parts", "outcome": { "resPct": { "scrap": 0.6 }, "res": { "metal": 10 } }, "result": "The pod gives up its plating and wiring." },
+      { "label": "Search for survivors", "outcome": { "pop": 1, "res": { "food": -30 } }, "result": "One survivor, frostbitten and grateful, joins the colony." }
+    ] },
+  { "id": "signal", "title": "Signal fragment", "chance": 0.2,
+    "text": "The terminal picks up a repeating pulse from somewhere far above the planet. It is not random.",
+    "requires": { "buildings": { "terminal": 1 }, "research": ["prospecting"] },
+    "choices": [
+      { "label": "Decode it", "outcome": { "resPct": { "data": 0.5 } }, "result": "The pattern is mathematical: prime gaps, then something that looks like a map." },
+      { "label": "Record and move on", "outcome": { "mod": { "key": "res:data", "add": 0.25, "duration": 600, "label": "Signal study" } }, "result": "The scholars argue about it for days. Their other work sharpens." }
+    ] },
+  { "id": "storm", "title": "Solar storm", "chance": 0.2,
+    "text": "Auroras burn across the sky. The arrays are taking a beating.",
+    "requires": { "buildings": { "solar": 2 } },
+    "choices": [
+      { "label": "Fold the arrays", "outcome": { "mod": { "key": "bld:solar", "add": -0.6, "duration": 240, "label": "Arrays folded" } }, "result": "The panels are safe. The colony runs dark for a while." },
+      { "label": "Ride it out", "outcome": { "mod": { "key": "bld:solar", "add": 0.5, "duration": 240, "label": "Storm surge" }, "res": { "glass": -10 } }, "result": "The storm overcharges the cells, and cracks a few panes." }
+    ] },
+  { "id": "coldsnap", "title": "Cold snap", "chance": 0.3,
+    "text": "The temperature drops another twenty degrees overnight.",
+    "requires": { "season": "winter", "pop": 6 },
+    "choices": [
+      { "label": "Burn the reserves", "outcome": { "resPct": { "scrap": -0.3 }, "mod": { "key": "heat", "add": 0.5, "duration": 180, "label": "Bonfires" } }, "result": "Bonfires in every corridor." },
+      { "label": "Ration and huddle", "outcome": { "mod": { "key": "jobs", "add": -0.15, "duration": 180, "label": "Huddling" } }, "result": "Everyone works slower, but warmer." }
+    ] },
+  { "id": "fever", "title": "Vent fever", "chance": 0.15,
+    "text": "Three harvesters come back from the vents coughing. It is spreading.",
+    "requires": { "pop": 10, "research": ["lichen"] },
+    "choices": [
+      { "label": "Quarantine", "outcome": { "mod": { "key": "jobs", "add": -0.2, "duration": 300, "label": "Quarantine" } }, "result": "The sick are isolated. Work slows, nobody dies." },
+      { "label": "Keep working", "outcome": { "pop": -2 }, "result": "Two survivors don't recover." }
+    ] },
+  { "id": "cache", "title": "Pre-crash cache", "chance": 0.15,
+    "text": "Miners break into a sealed room. Someone lived here before the crash. Long before.",
+    "requires": { "research": ["smelting"], "pop": 8 },
+    "choices": [
+      { "label": "Take the tools", "outcome": { "mod": { "key": "jobs", "add": 0.1, "duration": 900, "label": "Strange tools" } }, "result": "The tools fit human hands perfectly. Nobody likes that." },
+      { "label": "Study the walls", "outcome": { "resPct": { "data": 0.8 } }, "result": "The carvings describe a sun that once burned much brighter." }
+    ] }
+]

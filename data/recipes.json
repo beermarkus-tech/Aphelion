@@ -1,0 +1,5 @@
+[
+  { "id": "circuits", "name": "Circuits",     "in": { "metal": 3, "polymer": 2, "glass": 1 }, "out": { "circuits": 1 }, "requires": { "research": ["circuitry"] } },
+  { "id": "alloy",    "name": "Alloy Plates", "in": { "metal": 5, "glass": 1, "fuel": 2 },    "out": { "alloy": 1 },    "requires": { "research": ["metallurgy"] } },
+  { "id": "core",     "name": "Reactor Core", "in": { "alloy": 12, "circuits": 12, "fuel": 50 }, "out": { "core": 1 },  "requires": { "research": ["reactorTheory"], "buildings": { "quarters": 1 } } }
+]

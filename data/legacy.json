@@ -1,0 +1,9 @@
+[
+  { "id": "tools",     "name": "Inherited Tools",    "desc": "All jobs +10% per level.",                      "cost": 1, "costMult": 1.5, "max": 50, "effects": [ { "key": "jobs", "add": 0.1 } ] },
+  { "id": "founders",  "name": "Founders",           "desc": "Start each run with +1 survivor and +1 housing.", "cost": 2, "costMult": 2.0, "max": 5,  "effects": [ { "key": "startPop", "add": 1 } ] },
+  { "id": "caches",    "name": "Buried Caches",      "desc": "Start with +40 scrap. Raw storage +15%.",        "cost": 1, "costMult": 1.6, "max": 20, "effects": [ { "key": "startScrap", "add": 40 }, { "key": "cap:raw", "add": 0.15 } ] },
+  { "id": "memory",    "name": "Institutional Memory","desc": "Research costs -6% per level.",                 "cost": 2, "costMult": 1.7, "max": 8,  "effects": [ { "key": "researchCost", "add": -0.06 } ] },
+  { "id": "hearth",    "name": "Hearth Lore",        "desc": "Heat demand -8% per level.",                    "cost": 1, "costMult": 1.8, "max": 6,  "effects": [ { "key": "heatDemand", "add": -0.08 } ] },
+  { "id": "blueprints","name": "Blueprints",         "desc": "Building costs -4% per level.",                 "cost": 3, "costMult": 1.8, "max": 10, "effects": [ { "key": "buildCost", "add": -0.04 } ] },
+  { "id": "recall",    "name": "Recall",             "desc": "Keep all research up to tier N after a Rebuild.", "cost": 4, "costMult": 2.5, "max": 4,  "effects": [ { "key": "keepTier", "add": 1 } ] }
+]

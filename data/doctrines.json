@@ -1,0 +1,71 @@
+[
+  {
+    "id": "automation",
+    "name": "Automation",
+    "desc": "Trust the machines. Converters and fabricators run hotter; people matter less.",
+    "effects": [
+      {
+        "key": "converters",
+        "add": 0.25
+      },
+      {
+        "key": "autocraft",
+        "add": 1.0
+      },
+      {
+        "key": "power",
+        "add": 0.15
+      },
+      {
+        "key": "growth",
+        "add": -0.2
+      }
+    ]
+  },
+  {
+    "id": "biotech",
+    "name": "Biotech",
+    "desc": "Grow everything. More food, faster growth, tougher bodies.",
+    "effects": [
+      {
+        "key": "res:food",
+        "add": 0.4
+      },
+      {
+        "key": "res:biomass",
+        "add": 0.4
+      },
+      {
+        "key": "growth",
+        "add": 0.6
+      },
+      {
+        "key": "heatDemand",
+        "add": -0.25
+      },
+      {
+        "key": "jobs",
+        "add": 0.4
+      }
+    ]
+  },
+  {
+    "id": "exodus",
+    "name": "Exodus",
+    "desc": "Look up. Research is cheaper and faster; every component counts double toward leaving.",
+    "effects": [
+      {
+        "key": "res:data",
+        "add": 0.25
+      },
+      {
+        "key": "researchCost",
+        "add": -0.1
+      },
+      {
+        "key": "craft",
+        "add": 0.2
+      }
+    ]
+  }
+]

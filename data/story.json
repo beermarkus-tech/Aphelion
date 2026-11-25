@@ -1,0 +1,13 @@
+[
+  { "id": "start", "when": {}, "text": "Day 1. The pod is dead. Three of us made it. The sun is small and very far away." },
+  { "id": "yard", "when": { "buildings": { "scrapyard": 1 } }, "text": "We dragged the wreckage into a pit and started sorting. It feels like a beginning." },
+  { "id": "pop5", "when": { "pop": 5 }, "text": "Five now. Stragglers keep walking in from the dunes, following our smoke." },
+  { "id": "winter", "when": { "season": "winter" }, "text": "First deep winter. The air hurts. Keep the barrels burning." },
+  { "id": "terminal", "when": { "buildings": { "terminal": 1 } }, "text": "The flight computer boots. Its clock says we have been asleep for a very long time." },
+  { "id": "metal", "when": { "seen": { "metal": 1 } }, "text": "First metal from the smelter. Ugly, porous, ours." },
+  { "id": "pop12", "when": { "pop": 12 }, "text": "Twelve. Somebody painted a name on the main shelter: Aphelion. The farthest point from the sun." },
+  { "id": "circuit", "when": { "seen": { "circuits": 1 } }, "text": "The first hand-etched circuit works on the third try. The scholars cheer." },
+  { "id": "charter", "when": { "research": ["charter"] }, "text": "The colony votes on a charter. Not everyone agrees on what we are for." },
+  { "id": "core", "when": { "seen": { "core": 1 } }, "text": "The reactor core hums in its cradle. The engineers won't stop staring at it." },
+  { "id": "ignition", "when": { "buildings": { "ignition": 1 } }, "text": "Ignition. For one second, our little star is brighter than the real one." }
+]
