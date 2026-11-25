@@ -1,5 +1,5 @@
 // Offline support: cache the app shell on first load, then serve cache-first with a network refresh.
-const CACHE = 'aphelion-v1';
+const CACHE = 'aphelion-v2';
 self.addEventListener('install', (e) => {
   e.waitUntil(caches.open(CACHE).then((c) => c.addAll(['./', './index.html', './manifest.webmanifest', './icon.svg'])));
   self.skipWaiting();
