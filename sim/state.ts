@@ -29,6 +29,7 @@ export function createState(seed = 12345): GameState {
     events: [],
     nextEventAt: WORLD.eventInterval * 3,
     story: {},
+    goals: {},
     log: [],
     run: { score: 0, produced: {} },
     prestige: { legacy: 0, legacyEarned: 0, perks: {}, rebuilds: 0, ascensions: 0, credits: 0, echo: 0, bestScore: 0 },
@@ -113,6 +114,13 @@ export function reqMet(s: GameState, r: Req | undefined): boolean {
   if (r.seen) for (const [id, n] of Object.entries(r.seen)) if ((s.seen[id] ?? 0) < n) return false;
   if (r.pop !== undefined && s.pop < r.pop) return false;
   if (r.season !== undefined && season(s).id !== r.season) return false;
+  if (r.goals) for (const id of r.goals) if (!s.goals[id]) return false;
+  if (r.jobs) for (const [id, n] of Object.entries(r.jobs)) if ((s.jobs[id] ?? 0) < n) return false;
+  if (r.time !== undefined && s.time < r.time) return false;
+  if (r.researched !== undefined && Object.keys(s.research).length < r.researched) return false;
+  if (r.doctrine && !s.doctrine) return false;
+  if (r.rebuilds !== undefined && s.prestige.rebuilds < r.rebuilds) return false;
+  if (r.ascensions !== undefined && s.prestige.ascensions < r.ascensions) return false;
   return true;
 }
 

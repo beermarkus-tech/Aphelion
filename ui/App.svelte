@@ -29,7 +29,7 @@
       case 'colony': case 'crew': return true;
       case 'lab': return (s.buildings.terminal ?? 0) > 0 || Object.keys(s.research).length > 0;
       case 'works': return !!s.research.smelting || Object.keys(s.research).length > 4;
-      case 'legacy': return s.prestige.rebuilds > 0 || s.prestige.ascensions > 0 || s.peakPop >= 6 || canRebuild(s);
+      case 'legacy': return s.prestige.rebuilds > 0 || s.prestige.ascensions > 0 || !!s.goals.glass || canRebuild(s);
     }
   }
 

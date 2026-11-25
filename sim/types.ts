@@ -14,6 +14,26 @@ export interface Req {
   seen?: Amounts;
   pop?: number;
   season?: string;
+  /** Goals that must be complete (goals persist across Rebuilds). */
+  goals?: string[];
+  /** Workers currently assigned. */
+  jobs?: Record<string, number>;
+  /** Run time in seconds (e.g. 720 = start of year 2). */
+  time?: number;
+  /** Number of research topics completed this run. */
+  researched?: number;
+  doctrine?: boolean;
+  rebuilds?: number;
+  ascensions?: number;
+}
+
+export interface GoalDef {
+  id: string;
+  chapter: string;
+  title: string;
+  text: string;
+  check: Req;
+  reward?: Amounts;
 }
 
 export interface ResourceDef {
@@ -194,6 +214,7 @@ export interface GameState {
   events: PendingEvent[];
   nextEventAt: number;
   story: Record<string, true>;
+  goals: Record<string, true>;
   log: LogEntry[];
 
   run: { score: number; produced: Amounts };

@@ -2,6 +2,7 @@ import { DATA, EVT, WORLD } from './data';
 import { invalidate } from './mods';
 import { nextRandom } from './rng';
 import { addLog, addSurvivor, caps, housing, removeSurvivor, reqMet } from './state';
+import { checkGoals } from './goals';
 import type { GameState } from './types';
 
 let storyClock = new WeakMap<GameState, number>();
@@ -11,6 +12,7 @@ export function checkStory(s: GameState): void {
   const last = storyClock.get(s) ?? -1;
   if (Math.floor(s.time) === last) return;
   storyClock.set(s, Math.floor(s.time));
+  checkGoals(s);
   for (const st of DATA.story) {
     if (s.story[st.id]) continue;
     if (reqMet(s, st.when)) {

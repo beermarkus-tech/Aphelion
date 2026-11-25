@@ -88,18 +88,10 @@ export function hint(s: GameState, r: Report): string | null {
   if (r.starving) return 'Food is gone and people are leaving. Put more survivors on Grower duty or build Grow Tents.';
   if (r.heat.ratio < 0.9) return 'The colony is freezing. Build Burn Barrels (or Heat Exchangers) now.';
   if (r.power.eff < 0.99 && r.power.demand > 0) return 'Not enough power: machines run slower. Build Solar Arrays or Biomass Burners, or switch some machines off.';
-  if (b('scrapyard') === 0 && s.res.scrap < 10) return 'Tap Scavenge to collect scrap from the wreck.';
-  if (b('scrapyard') === 0) return 'Build a Scrapyard so scrap keeps coming in on its own.';
-  if (Object.values(s.jobs).every((v) => !v)) return 'Open Crew and give your survivors jobs.';
-  if (s.pop >= housing(s) && b('shelter') < 2) return 'Everyone has a bed. Build a Shelter so more survivors can join.';
   if (nextIsWinter && r.heat.supply < s.pop * WORLD.heatPerSurvivor * 1.7 * m(s, 'heatDemand')) {
-    return `${se.name} ends soon and Deep Winter follows. Build Burn Barrels before the cold arrives.`;
+    return `${se.name} ends soon and Deep Winter follows. Build more heat (Burn Barrels) before the cold arrives.`;
   }
-  if (b('terminal') === 0) return 'Build a Salvaged Terminal to unlock Scholars and research.';
-  if (!s.jobs.scholar) return 'Assign a Scholar in Crew so the colony produces data for research.';
-  if (Object.keys(s.research).length === 0) return 'Spend data in the Lab. Prospecting and Lichen Culture open new jobs.';
-  if (!s.research.smelting) return 'Work toward Smelting in the Lab: it needs Prospecting and Distillation first.';
-  if (s.research.smelting && !b('smelter')) return 'Build a Smelter. It needs fuel from a Distillery and power from Solar Arrays.';
+  if (s.pop >= housing(s) && s.time > 120) return 'Housing is full, so nobody new can join. Build more Shelters or Hab Modules.';
   return null;
 }
 

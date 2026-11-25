@@ -6,11 +6,11 @@
     "effects": [
       {
         "key": "converters",
-        "add": 0.25
+        "add": 0.15
       },
       {
         "key": "autocraft",
-        "add": 1.0
+        "add": 0.6
       },
       {
         "key": "power",
@@ -56,11 +56,11 @@
     "effects": [
       {
         "key": "res:data",
-        "add": 0.25
+        "add": 0.3
       },
       {
         "key": "researchCost",
-        "add": -0.1
+        "add": -0.05
       },
       {
         "key": "craft",

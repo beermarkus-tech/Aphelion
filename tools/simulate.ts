@@ -17,7 +17,7 @@ function verdict(key: string, v: number | undefined): string {
 
 {
   const quick = process.argv.includes('--quick');
-  const max = quick ? 2 * 3600 : 5 * 86400;
+  const max = quick ? 2 * 3600 : 9 * 86400;
   const rows: Record<string, Milestones> = {};
   for (const doctrine of ['automation', 'biotech', 'exodus']) {
     const t0 = Date.now();

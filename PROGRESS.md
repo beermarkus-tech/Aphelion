@@ -23,7 +23,13 @@
   the deployed `version.json` differs from the running build (checked on start, every 5 min, on return and when back online).
   Service worker is network-first for pages, cache-first for hashed assets. Version shown in Settings.
 - **Deploy**: GitHub Pages workflow on push to `main` → https://beermarkus-tech.github.io/Aphelion/
-- **Balance** (`npm run sim`): first Rebuild 31 min; doctrine ~1h45; Ascension 2d1h–2d13h casual; doctrine spread 13.4%.
+- **Goal chain** (playtest feedback: unclear start, too many choices, too fast): 28 goals in 5 chapters with progress bars
+  and the overall aim on the Colony tab. Early buildings and jobs unlock through goals. Power arrives only when needed:
+  the pod powers one Smelter, a second needs Solar (Photovoltaics now follows Smelting), and Solar's winter dip leads to
+  Biomass Burners (new Combustion research). Distillery no longer uses power. Tighter food, storage and growth.
+  Old saves are migrated (Chapter I goals completed for established colonies).
+- **Balance** (`npm run sim`, 2x slower than the proposal by request): first Rebuild 1h05; doctrine 4h34; Ascension
+  5d1h–5d9h casual; doctrine spread 12.8%. About 15 research topics in the first hour (was ~24).
 
 ## Open items
 - Era II (Orbit) is teased only: Ascension grants Launch Credits and restarts Era I.
@@ -34,6 +40,6 @@
 - Balance bot is greedy and simple; real playtests may find other stall points (watch Hab Module costs and data caps mid-game).
 
 ## Next steps
-1. Playtest the first hour on a phone and a tablet; tune hints and early costs.
+1. Playtest the new goal chain (first 2 hours) on a phone; note any goal that's unclear or any wait longer than ~5 min.
 2. Era II: big-number library, 8-tier Reactor chain fed by Era I output, first three challenges.
 3. Telemetry opt-in for stall points; cosmetic theme pack scaffolding.

@@ -2,22 +2,68 @@
   "tick": 0.2,
   "seasonLength": 180,
   "seasons": [
-    { "id": "thaw",   "name": "Thaw",        "solar": 1.0,  "farm": 1.0,  "heat": 0.6 },
-    { "id": "bloom",  "name": "Long Day",    "solar": 1.3,  "farm": 1.25, "heat": 0.25 },
-    { "id": "dust",   "name": "Dust Season", "solar": 0.85, "farm": 0.6,  "heat": 0.5 },
-    { "id": "winter", "name": "Deep Winter", "solar": 0.45, "farm": 0.7,  "heat": 1.7 }
+    {
+      "id": "thaw",
+      "name": "Thaw",
+      "solar": 1.0,
+      "farm": 1.0,
+      "heat": 0.6
+    },
+    {
+      "id": "bloom",
+      "name": "Long Day",
+      "solar": 1.3,
+      "farm": 1.25,
+      "heat": 0.25
+    },
+    {
+      "id": "dust",
+      "name": "Dust Season",
+      "solar": 0.85,
+      "farm": 0.6,
+      "heat": 0.5
+    },
+    {
+      "id": "winter",
+      "name": "Deep Winter",
+      "solar": 0.45,
+      "farm": 0.7,
+      "heat": 1.7
+    }
   ],
-  "start": { "pop": 3, "housing": 3, "res": { "food": 40 } },
-  "base": { "power": 1, "heat": 1.5 },
-  "foodPerSurvivor": 0.25,
+  "start": {
+    "pop": 3,
+    "housing": 3,
+    "res": {
+      "food": 60
+    }
+  },
+  "base": {
+    "power": 1,
+    "heat": 1.5
+  },
+  "foodPerSurvivor": 0.3,
   "heatPerSurvivor": 0.5,
-  "growthPerSecond": 0.03,
+  "growthPerSecond": 0.02,
   "starvePerSecond": 0.1,
   "coldLossPerSecond": 0.04,
   "clickScrap": 1,
-  "rebuild": { "scoreDivisor": 350, "exponent": 0.5, "minPop": 6, "legacyBonus": 0.02 },
-  "ascension": { "creditBonus": 0.5, "echo": 0.1 },
-  "offline": { "fullHours": 12, "maxHours": 168, "declineHours": 12, "coarseTick": 1 },
+  "rebuild": {
+    "scoreDivisor": 1100,
+    "exponent": 0.5,
+    "minPop": 6,
+    "legacyBonus": 0.02
+  },
+  "ascension": {
+    "creditBonus": 0.5,
+    "echo": 0.1
+  },
+  "offline": {
+    "fullHours": 12,
+    "maxHours": 168,
+    "declineHours": 12,
+    "coarseTick": 1
+  },
   "eventInterval": 60,
   "eventExpiry": 86400,
   "maxPendingEvents": 3

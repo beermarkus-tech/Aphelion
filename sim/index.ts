@@ -9,3 +9,4 @@ export * from './prestige';
 export * from './offline';
 export * from './save';
 export * from './format';
+export * from './goals';

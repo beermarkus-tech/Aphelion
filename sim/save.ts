@@ -1,4 +1,6 @@
 import { createState, SAVE_VERSION } from './state';
+import { DATA } from './data';
+import { checkGoals } from './goals';
 import { invalidate } from './mods';
 import type { GameState } from './types';
 
@@ -14,6 +16,7 @@ export function deserialize(json: string): GameState {
   const base = createState();
   const s = deepMerge(base, raw) as GameState;
   s.version = SAVE_VERSION;
+  if (!raw.goals) migrateGoals(s);
   invalidate(s);
   return s;
 }
@@ -44,4 +47,14 @@ export function importSave(text: string): GameState {
   const bin = atob(t);
   const bytes = Uint8Array.from(bin, (c) => c.charCodeAt(0));
   return deserialize(new TextDecoder().decode(bytes));
+}
+
+/** Saves from before the goal chain: an established colony gets the goals it has clearly passed. */
+function migrateGoals(s: GameState): void {
+  const established = Object.keys(s.research).length > 0 || s.prestige.rebuilds > 0 || (s.buildings.terminal ?? 0) > 0;
+  if (!established) return;
+  const firstChapter = DATA.goals[0]?.chapter;
+  for (const g of DATA.goals) if (g.chapter === firstChapter) s.goals[g.id] = true;
+  invalidate(s);
+  checkGoals(s);
 }

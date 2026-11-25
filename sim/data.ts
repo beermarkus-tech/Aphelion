@@ -8,8 +8,9 @@ import legacy from '../data/legacy.json';
 import events from '../data/events.json';
 import story from '../data/story.json';
 import world from '../data/world.json';
+import goals from '../data/goals.json';
 import type {
-  BuildingDef, DoctrineDef, EventDef, JobDef, LegacyDef, RecipeDef, ResearchDef, ResourceDef, StoryDef, WorldDef,
+  BuildingDef, GoalDef, DoctrineDef, EventDef, JobDef, LegacyDef, RecipeDef, ResearchDef, ResourceDef, StoryDef, WorldDef,
 } from './types';
 
 export interface GameData {
@@ -22,6 +23,7 @@ export interface GameData {
   legacy: LegacyDef[];
   events: EventDef[];
   story: StoryDef[];
+  goals: GoalDef[];
   world: WorldDef;
 }
 
@@ -35,6 +37,7 @@ export const DATA: GameData = {
   legacy: legacy as unknown as LegacyDef[],
   events: events as unknown as EventDef[],
   story: story as unknown as StoryDef[],
+  goals: goals as unknown as GoalDef[],
   world: world as unknown as WorldDef,
 };
 
@@ -53,6 +56,7 @@ export const DOC = index(DATA.doctrines);
 export const LEG = index(DATA.legacy);
 export const EVT = index(DATA.events);
 export const WORLD = DATA.world;
+export const GOAL = index(DATA.goals);
 
 /** Validate cross references. Returns a list of problems (empty = valid). */
 export function validateData(d: GameData = DATA): string[] {
@@ -63,7 +67,11 @@ export function validateData(d: GameData = DATA): string[] {
   const checkAmounts = (where: string, a: Record<string, number> | undefined) => {
     for (const k of Object.keys(a ?? {})) if (!res.has(k)) problems.push(`${where}: unknown resource "${k}"`);
   };
-  const checkReq = (where: string, r: { research?: string[]; buildings?: Record<string, number>; seen?: Record<string, number> } | undefined) => {
+  const gls = new Set(d.goals.map((g) => g.id));
+  const jbs = new Set(d.jobs.map((j) => j.id));
+  const checkReq = (where: string, r: { research?: string[]; buildings?: Record<string, number>; seen?: Record<string, number>; goals?: string[]; jobs?: Record<string, number> } | undefined) => {
+    for (const k of r?.goals ?? []) if (!gls.has(k)) problems.push(`${where}: unknown goal "${k}"`);
+    for (const k of Object.keys(r?.jobs ?? {})) if (!jbs.has(k)) problems.push(`${where}: unknown job "${k}"`);
     for (const k of r?.research ?? []) if (!rsc.has(k)) problems.push(`${where}: unknown research "${k}"`);
     for (const k of Object.keys(r?.buildings ?? {})) if (!bld.has(k)) problems.push(`${where}: unknown building "${k}"`);
     checkAmounts(where, r?.seen);
@@ -84,6 +92,7 @@ export function validateData(d: GameData = DATA): string[] {
   for (const r of d.recipes) { checkAmounts(`recipe ${r.id} in`, r.in); checkAmounts(`recipe ${r.id} out`, r.out); checkReq(`recipe ${r.id}`, r.requires); }
   for (const e of d.events) checkReq(`event ${e.id}`, e.requires);
   for (const s of d.story) checkReq(`story ${s.id}`, s.when);
+  for (const g of d.goals) { checkReq(`goal ${g.id}`, g.check); checkAmounts(`goal ${g.id} reward`, g.reward); }
   // research prerequisites must not be in a higher tier (Recall keeps whole tiers) and must be acyclic
   const tier = Object.fromEntries(d.research.map((r) => [r.id, r.tier]));
   const reqs = Object.fromEntries(d.research.map((r) => [r.id, r.requires?.research ?? []]));

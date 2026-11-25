@@ -41,9 +41,17 @@ Design source: the "Aphelion – Idle Game Design Proposal" (Nov 2026). This rep
 - `npm run dev` — dev server (`--host`, so a phone/tablet on the LAN can open it)
 - `npm test` — all tests incl. balance gate (~25 s)
 - `npm run sim` — milestone report vs pacing targets for every doctrine (`-- --quick` for 2 h)
+- `npx vite-node tools/goals.ts 4` — goal and research timeline for the first hours
 - `npx vite-node tools/trace.ts 90 5 automation` — minute-by-minute bot timeline
 - `npm run check` — svelte-check + types; `npm run build` — production build into `dist/`
 
 ## Balance gate
-Every change to costs or rates must keep `npm test` green: first Rebuild 30–45 min, Ascension 2–3 days (casual
-pattern), doctrine spread ≤ 15% (continuous play). Keep PROGRESS.md updated at the end of each session.
+Every change to costs or rates must keep `npm test` green: first Rebuild 60–90 min, doctrine 3–5 h, Ascension 4–7 days
+(casual pattern), doctrine spread ≤ 15% (continuous play). These are 2x the original proposal's timings, chosen after the
+first playtest felt too fast. Keep PROGRESS.md updated at the end of each session.
+
+## Goal chain
+`data/goals.json` is the player's guide and the early-game gate: goals complete strictly in order, persist across
+Rebuilds, and early buildings/jobs `require` goals so only a few things are available at a time. Each new mechanic should
+arrive with the goal that needs it (e.g. power appears only when a second Smelter needs it). `npx vite-node tools/goals.ts 4`
+prints when the bot completes each goal and research — check it for dead zones after balance changes.

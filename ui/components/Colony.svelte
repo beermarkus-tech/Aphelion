@@ -5,6 +5,7 @@
   import BuildingCard from './BuildingCard.svelte';
   import EventCard from './EventCard.svelte';
   import ColonyScene from './ColonyScene.svelte';
+  import Goals from './Goals.svelte';
   import Icon from './Icon.svelte';
   import { hold } from '../util';
 
@@ -30,7 +31,7 @@
   let taps = $state(0);
 </script>
 
-<ColonyScene />
+<Goals />
 
 {#if tip}
   <div class="hint" role="status"><Icon name="spark" size={16} /><span>{tip}</span></div>
@@ -52,6 +53,8 @@
     </button>
   </div>
 {/if}
+
+<ColonyScene />
 
 {#each groups as g (g.id)}
   <h2 class="section-title">{g.label}</h2>

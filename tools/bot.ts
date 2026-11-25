@@ -3,7 +3,7 @@
  * It plays "reasonably well" with simple greedy rules — not optimally.
  */
 import {
-  DATA, BLD, JOB, RCP, WORLD,
+  DATA, BLD, JOB, RCP, WORLD, currentGoal,
   assign, build, buildingCost, buildingUnlocked, buyPerk, canAfford, canRebuild, caps, chooseDoctrine, craft, emptyReport,
   exceedsCaps, housing, idle, jobUnlocked, m, perkCost, rebuild, rebuildGain, recipeUnlocked, research, researchAvailable,
   researchCost, resolveEvent, scavenge, season, setAutocraft, setDefaultJob, tick, type GameState, type Report,
@@ -22,9 +22,9 @@ export interface BotOptions {
 export const defaultBot: BotOptions = { doctrine: 'automation', thinkEvery: 2, clickFor: 60, rebuildPolicy: 'doubling' };
 
 const RESEARCH_ORDER = [
-  'prospecting', 'lichen', 'distillation', 'smelting', 'photovoltaics', 'sorting', 'rotation', 'archives', 'polymers', 'glassworking',
+  'prospecting', 'lichen', 'distillation', 'smelting', 'photovoltaics', 'combustion', 'sorting', 'rotation', 'archives', 'polymers', 'glassworking',
   'logistics', 'engineering', 'cryo', 'picks', 'medicine', 'circuitry', 'habitat', 'workshop', 'insulation', 'review', 'rosters',
-  'thermal', 'tracking', 'heatrecovery', 'metallurgy', 'charter', 'fabrication', 'deepscan', 'geothermal', 'superconductors',
+  'charter', 'thermal', 'tracking', 'heatrecovery', 'metallurgy', 'fabrication', 'deepscan', 'geothermal', 'superconductors',
   'reactorTheory', 'ignition',
 ];
 
@@ -63,7 +63,9 @@ export class Bot {
   }
 
   prestige(s: GameState): void {
-    if (this.opt.rebuildPolicy !== 'never' && canRebuild(s) && !s.research.reactorTheory) {
+    // after the first Rebuild, follow the goal chain: sign the charter before rebuilding again
+    const charterFirst = s.prestige.rebuilds >= 1 && !s.doctrine;
+    if (this.opt.rebuildPolicy !== 'never' && canRebuild(s) && !s.research.reactorTheory && !charterFirst) {
       const gain = rebuildGain(s);
       const target = Math.max(3, s.prestige.legacyEarned);
       if (gain >= target) rebuild(s);
@@ -101,8 +103,14 @@ export class Bot {
 
   doCrafting(s: GameState): void {
     const want: Record<string, number> = { circuits: 20, alloy: 20, core: 0 };
-    if (s.research.reactorTheory) { want.circuits = 100; want.alloy = 100; }
-    if (s.research.reactorTheory && s.buildings.quarters) want.core = 6;
+    if (s.research.reactorTheory) { want.circuits = 160; want.alloy = 160; }
+    // keep enough components for the buildings we want next
+    for (const id of ['lab', 'fabricator', 'geothermal']) {
+      if (!buildingUnlocked(s, id)) continue;
+      const c = buildingCost(s, id);
+      for (const r of ['circuits', 'alloy']) if (c[r]) want[r] = Math.max(want[r], Math.ceil(c[r]) + 5);
+    }
+    if (s.research.reactorTheory && s.buildings.quarters) want.core = 11;
     const hasFab = (s.buildings.fabricator ?? 0) > 0;
     for (const rc of DATA.recipes) {
       if (!recipeUnlocked(s, rc.id)) continue;
@@ -159,6 +167,9 @@ export class Bot {
     w.crate = 3;
     w.warehouse = 3;
     w.depot = 3;
+    // follow the goal chain like a player would
+    const goal = currentGoal(s);
+    for (const id of Object.keys(goal?.check.buildings ?? {})) w[id] = Math.max(w[id] ?? 0, 8.5);
     w.quarters = 10;
     w.ignition = 10;
     return w;
@@ -180,6 +191,9 @@ export class Bot {
         if (sb.storage?.[res] || sb.storage?.[tier]) w[st] = Math.max(w[st] ?? 0, 8);
       }
     }
+    // research that doesn't fit in storage → more data storage
+    const nextRes = RESEARCH_ORDER.find((id) => researchAvailable(s, id));
+    if (nextRes && exceedsCaps(s, researchCost(s, nextRes))) { w.archive = 8; w.lab = 8; }
     cands.sort((a, b) => (w[b.b.id] ?? 1) - (w[a.b.id] ?? 1));
     let bought = 0;
     for (const c of cands) {
@@ -207,6 +221,10 @@ export class Bot {
     const foodLow = s.res.food < caps(s).food * 0.3;
     const growers = Math.max(0, Math.ceil((foodUse * (foodLow ? 1.4 : 1.1) - other) / perGrower));
     assign(s, 'grower', Math.min(growers, idle(s)));
+    for (const [id, n] of Object.entries(currentGoal(s)?.check.jobs ?? {})) {
+      const need = n - (s.jobs[id] ?? 0);
+      if (need > 0) assign(s, id, Math.min(need, idle(s)));
+    }
     const weights: Record<string, number> = {
       scavenger: 2, scholar: 3, miner: 2.5, harvester: 2.5, icecutter: (s.buildings.hydroponics ?? 0) + (s.buildings.electrolyzer ?? 0) > 0 ? 1.5 : 0,
       engineer: 1, medic: s.pop >= 10 ? 0.5 : 0,

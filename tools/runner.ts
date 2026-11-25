@@ -14,9 +14,9 @@ export interface Milestones {
 
 export const TARGETS: Record<string, [number, number]> = {
   firstBuilding: [0, 90],
-  firstRebuild: [30 * 60, 45 * 60],
-  doctrine: [90 * 60, 3 * 3600],
-  ascension: [2 * 86400, 3 * 86400],
+  firstRebuild: [60 * 60, 90 * 60],
+  doctrine: [3 * 3600, 5 * 3600],
+  ascension: [4 * 86400, 7 * 86400],
 };
 
 /** Casual pattern: one long first session, then 5-minute check-ins every 90 minutes, sleeping 8h a day. */
