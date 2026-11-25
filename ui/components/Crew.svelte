@@ -30,9 +30,9 @@
         {#if j.out.length}<div class="out num">{j.out.join(' · ')} each</div>{/if}
       </div>
       <div class="ctl">
-        <button class="btn icon" disabled={j.count === 0} use:hold={() => act((s) => assign(s, j.id, -1)) !== 0} aria-label="Remove a {j.name}"><Icon name="minus" /></button>
+        <button class="btn icon" disabled={j.count === 0} use:hold={() => act((s) => assign(s, j.id, -1), 'tap') !== 0} aria-label="Remove a {j.name}"><Icon name="minus" /></button>
         <span class="cnt num" aria-live="polite">{j.count}</span>
-        <button class="btn icon" disabled={v.idle === 0} use:hold={() => act((s) => assign(s, j.id, 1)) !== 0} aria-label="Add a {j.name}"><Icon name="plus" /></button>
+        <button class="btn icon" disabled={v.idle === 0} use:hold={() => act((s) => assign(s, j.id, 1), 'tap') !== 0} aria-label="Add a {j.name}"><Icon name="plus" /></button>
       </div>
     </div>
   {/each}

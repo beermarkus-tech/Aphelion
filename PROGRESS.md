@@ -13,11 +13,18 @@
 - **UI (phone + tablet)**: bottom tab bar + status strip on phones; status sidebar + top tabs on tablets; log column on wide
   landscape. Production breakdown sheet per resource (sources, drains, multipliers), cost chips with time-to-afford,
   hold-to-repeat buttons, context hints for the first hour, toasts, away report, notation toggle, PWA (installable, offline).
+- **Graphics**: animated starfield behind the app (canvas, ~30 fps, pauses when hidden); colony vista on the Colony tab drawn
+  from your actual buildings and survivors, with season skies, smoke, snow in winter and dust haze. "Animated" toggle in Settings;
+  honours reduced-motion.
+- **Audio** (`ui/audio.ts`, Web Audio, no files): generative ambient score (slow pad chords, bell motifs, wind that rises in
+  winter) and synthesized effects for scavenge, build, craft, research, events, story beats, Rebuild and Ascension.
+  Music/effects volume sliders in Settings; starts on first tap, pauses when the app is hidden.
+- **Deploy**: GitHub Pages workflow on push to `main` → https://beermarkus-tech.github.io/Aphelion/
 - **Balance** (`npm run sim`): first Rebuild 31 min; doctrine ~1h45; Ascension 2d1h–2d13h casual; doctrine spread 13.4%.
 
 ## Open items
 - Era II (Orbit) is teased only: Ascension grants Launch Credits and restarts Era I.
-- No audio yet (design calls for soft per-era ambient).
+- Audio and visuals are Era I only; each future era should get its own palette, scene and score.
 - No cloud save; export/import text and file download only.
 - Anomaly system, challenges, secrets: not started.
 - Native wrappers (Capacitor) not set up; the PWA covers install on iOS/Android for now.

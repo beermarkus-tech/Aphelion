@@ -14,7 +14,7 @@
     <p>{def.text}</p>
     <div class="choices">
       {#each def.choices as c, i}
-        <button class="btn" onclick={() => act((s) => resolveEvent(s, index, i))}>{c.label}</button>
+        <button class="btn" onclick={() => act((s) => resolveEvent(s, index, i), 'tap')}>{c.label}</button>
       {/each}
     </div>
   </article>

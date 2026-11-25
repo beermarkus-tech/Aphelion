@@ -210,7 +210,7 @@ export interface GameState {
 
   chrono: number;
   overdrive: boolean;
-  settings: { notation: Notation; seenIntro: boolean };
+  settings: { notation: Notation; seenIntro: boolean; music: number; sfx: number; motion: boolean };
   lastSaved: number;
   stats: { clicks: number; crafted: number; eventsSeen: number; firstRebuildAt: number | null };
 }

@@ -37,7 +37,7 @@
     <p class="muted">Choose what this colony is for. The choice lasts until the next Rebuild and shapes everything after.</p>
     <div class="docs">
       {#each DATA.doctrines as d (d.id)}
-        <button class="doc tap" onclick={() => act((s) => chooseDoctrine(s, d.id))}>
+        <button class="doc tap" onclick={() => act((s) => chooseDoctrine(s, d.id), 'rebuild')}>
           <span class="dn">{d.name}</span>
           <span class="dd">{d.desc}</span>
           <span class="fx num">{d.effects.map((e) => `${e.add > 0 ? '+' : ''}${Math.round(e.add * 100)}% ${e.key.replace('res:', '').replace('job:', '')}`).join(' · ')}</span>

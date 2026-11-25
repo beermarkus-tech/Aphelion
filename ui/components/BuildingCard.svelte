@@ -19,7 +19,7 @@
   });
   let bump = $state(0);
   function buy() {
-    const ok = act((s) => build(s, id));
+    const ok = act((s) => build(s, id), 'build');
     if (ok) bump++;
     return ok;
   }
@@ -46,9 +46,9 @@
   {#if b.toggle && v.count > 0}
     <div class="toggle" aria-label="Running">
       <span class="muted small">Running</span>
-      <button class="btn small icon ghost" disabled={v.active <= 0} onclick={() => act((s) => setActive(s, id, v.active - 1))} aria-label="Run one fewer"><Icon name="minus" size={16} /></button>
+      <button class="btn small icon ghost" disabled={v.active <= 0} onclick={() => act((s) => setActive(s, id, v.active - 1), 'toggle')} aria-label="Run one fewer"><Icon name="minus" size={16} /></button>
       <span class="num on" class:warn={v.active < v.count}>{v.active}/{v.count}</span>
-      <button class="btn small icon ghost" disabled={v.active >= v.count} onclick={() => act((s) => setActive(s, id, v.active + 1))} aria-label="Run one more"><Icon name="plus" size={16} /></button>
+      <button class="btn small icon ghost" disabled={v.active >= v.count} onclick={() => act((s) => setActive(s, id, v.active + 1), 'toggle')} aria-label="Run one more"><Icon name="plus" size={16} /></button>
     </div>
   {/if}
 </article>

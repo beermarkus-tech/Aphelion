@@ -13,6 +13,7 @@
   import Sheet from './components/Sheet.svelte';
   import Overlays from './components/Overlays.svelte';
   import Icon from './components/Icon.svelte';
+  import Starfield from './components/Starfield.svelte';
 
   const tabs: { id: Tab; label: string; icon: string }[] = [
     { id: 'colony', label: 'Colony', icon: 'colony' },
@@ -45,6 +46,7 @@
   }
 </script>
 
+<Starfield />
 <div class="app">
   <Header />
 
@@ -91,6 +93,7 @@
 
 <style>
   .app {
+    position: relative; z-index: 1;
     height: 100dvh;
     display: grid;
     grid-template-columns: minmax(0, 1fr);

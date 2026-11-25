@@ -1,8 +1,8 @@
 /* Era I · Cinder — calm, dark, instrument panel. Each era will swap these tokens. */
 :root {
   --bg: #0b0d10;
-  --panel: #12151a;
-  --panel-2: #181c22;
+  --panel: rgba(18, 21, 26, 0.9);
+  --panel-2: rgba(24, 28, 34, 0.92);
   --panel-3: #1f242c;
   --line: #262c35;
   --line-2: #323a45;
@@ -13,6 +13,7 @@
   --accent-2: #ffb47a;
   --accent-ink: #1a0d03;
   --accent-soft: rgba(255, 138, 61, 0.12);
+  --solid: #12151a;
   --good: #6fd19a;
   --bad: #ff6f6f;
   --warn: #f3c969;
@@ -31,7 +32,9 @@
 }
 
 * { box-sizing: border-box; }
-html, body { margin: 0; height: 100%; background: var(--bg); color: var(--text); }
+html { background: var(--bg); }
+html, body { margin: 0; height: 100%; color: var(--text); }
+body { background: transparent; }
 body {
   font: 15px/1.4 var(--font);
   -webkit-font-smoothing: antialiased;

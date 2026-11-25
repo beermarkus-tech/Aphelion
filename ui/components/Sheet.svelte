@@ -7,6 +7,7 @@
   import Log from './Log.svelte';
   import Icon from './Icon.svelte';
   import type { Notation } from '../../sim';
+  import { sfx } from '../audio';
 
   const sheet = $derived(ui.sheet);
   function close() { ui.sheet = null; }
@@ -121,6 +122,21 @@
       {:else if sheet.kind === 'log'}
         <Log limit={120} />
       {:else if sheet.kind === 'settings'}
+        <h3>Sound</h3>
+        <label class="slider"><span>Music</span>
+          <input type="range" min="0" max="1" step="0.05" value={S().settings.music}
+            oninput={(e) => act((s) => (s.settings.music = Number((e.currentTarget as HTMLInputElement).value)))} />
+          <span class="num pct">{Math.round(S().settings.music * 100)}%</span></label>
+        <label class="slider"><span>Effects</span>
+          <input type="range" min="0" max="1" step="0.05" value={S().settings.sfx}
+            oninput={(e) => act((s) => (s.settings.sfx = Number((e.currentTarget as HTMLInputElement).value)))}
+            onchange={() => sfx('build')} />
+          <span class="num pct">{Math.round(S().settings.sfx * 100)}%</span></label>
+        <p class="muted small">On iPhone and iPad, the ring/silent switch also mutes the game.</p>
+        <h3>Graphics</h3>
+        <label class="sw"><input type="checkbox" checked={S().settings.motion}
+          onchange={(e) => act((s) => (s.settings.motion = (e.currentTarget as HTMLInputElement).checked))} />
+          <span>Animated starfield and colony scene</span></label>
         <h3>Number notation</h3>
         <div class="seg" role="radiogroup" aria-label="Number notation">
           {#each [['scientific', '1.23e6'], ['engineering', '12.3e6'], ['words', '1.2 million']] as [id, ex] (id)}
@@ -156,7 +172,7 @@
         <p class="big">You gain <strong class="accent num">+{rebuildGain(S())} Legacy</strong>.</p>
         <div class="row">
           <button class="btn" onclick={close}>Not yet</button>
-          <button class="btn primary" onclick={() => { act(rebuild); close(); ui.tab = 'legacy'; }}>Rebuild</button>
+          <button class="btn primary" onclick={() => { act(rebuild, 'rebuild'); close(); ui.tab = 'legacy'; }}>Rebuild</button>
         </div>
       {:else if sheet.kind === 'ascend'}
         <p>Era I ends. Legacy and perks reset to zero. You keep a permanent echo of the Legacy you earned.</p>
@@ -164,7 +180,7 @@
         <p class="muted small">Era II (Orbit) arrives in a future update. Until then, Launch Credits make every new colony grow faster.</p>
         <div class="row">
           <button class="btn" onclick={close}>Not yet</button>
-          <button class="btn primary" onclick={() => { act(ascend); close(); ui.tab = 'colony'; }}>Ascend</button>
+          <button class="btn primary" onclick={() => { act(ascend, 'ascend'); close(); ui.tab = 'colony'; }}>Ascend</button>
         </div>
       {/if}
     </div>
@@ -175,7 +191,7 @@
   .scrim { position: fixed; inset: 0; background: rgba(0, 0, 0, 0.55); z-index: 40; animation: fade 0.15s ease; }
   .sheet {
     position: fixed; z-index: 41; left: 0; right: 0; bottom: 0; max-height: 88dvh; display: flex; flex-direction: column;
-    background: var(--panel); border-top: 1px solid var(--line-2); border-radius: 16px 16px 0 0;
+    background: var(--solid); border-top: 1px solid var(--line-2); border-radius: 16px 16px 0 0;
     padding: 0 calc(var(--gutter) + var(--safe-right)) calc(16px + var(--safe-bottom)) calc(var(--gutter) + var(--safe-left));
     animation: up 0.2s ease;
   }
@@ -208,6 +224,11 @@
     width: 100%; margin: 8px 0; background: var(--bg); border: 1px solid var(--line-2); border-radius: var(--radius-sm);
     padding: 8px; font-family: var(--mono); font-size: 12px; color: var(--text); resize: vertical;
   }
+  .slider { display: grid; grid-template-columns: 70px 1fr 44px; align-items: center; gap: 10px; min-height: var(--tap); font-size: 14px; }
+  .slider input { width: 100%; accent-color: var(--accent); height: 28px; }
+  .pct { text-align: right; font-size: 13px; color: var(--muted); }
+  .sw { display: flex; align-items: center; gap: 10px; min-height: var(--tap); font-size: 14px; cursor: pointer; }
+  .sw input { width: 20px; height: 20px; accent-color: var(--accent); }
   .danger { border-color: var(--bad); color: var(--bad); }
   .about { margin-top: 20px; }
 </style>

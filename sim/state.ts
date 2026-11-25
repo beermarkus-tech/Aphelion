@@ -34,7 +34,7 @@ export function createState(seed = 12345): GameState {
     prestige: { legacy: 0, legacyEarned: 0, perks: {}, rebuilds: 0, ascensions: 0, credits: 0, echo: 0, bestScore: 0 },
     chrono: 0,
     overdrive: false,
-    settings: { notation: 'scientific', seenIntro: false },
+    settings: { notation: 'scientific', seenIntro: false, music: 0.5, sfx: 0.7, motion: true },
     lastSaved: 0,
     stats: { clicks: 0, crafted: 0, eventsSeen: 0, firstRebuildAt: null },
   };

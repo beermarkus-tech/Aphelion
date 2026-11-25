@@ -54,7 +54,7 @@
     <article class="card perk">
       <div class="phd"><span class="nm">{pk.name}</span><span class="num lvl">{pk.lvl}/{pk.max}</span></div>
       <p class="muted desc">{pk.desc}</p>
-      <button class="btn small" disabled={pk.lvl >= pk.max || v.p.legacy < pk.cost} onclick={() => act((s) => buyPerk(s, pk.id))}>
+      <button class="btn small" disabled={pk.lvl >= pk.max || v.p.legacy < pk.cost} onclick={() => act((s) => buyPerk(s, pk.id), 'research')}>
         {pk.lvl >= pk.max ? 'Maxed' : `Buy · ${pk.cost} Legacy`}
       </button>
     </article>

@@ -34,9 +34,9 @@
         </div>
         <Cost lines={x.lines} />
         <div class="row">
-          <button class="btn" disabled={x.max < 1} use:hold={() => act((s) => craft(s, x.id, 1)) > 0}>Craft 1</button>
-          <button class="btn" disabled={x.max < 10} onclick={() => act((s) => craft(s, x.id, 10))}>×10</button>
-          <button class="btn" disabled={x.max < 1} onclick={() => act((s) => craft(s, x.id, Math.max(1, Math.floor(x.max / 2))))}>Half</button>
+          <button class="btn" disabled={x.max < 1} use:hold={() => act((s) => craft(s, x.id, 1), 'craft') > 0}>Craft 1</button>
+          <button class="btn" disabled={x.max < 10} onclick={() => act((s) => craft(s, x.id, 10), 'craft')}>×10</button>
+          <button class="btn" disabled={x.max < 1} onclick={() => act((s) => craft(s, x.id, Math.max(1, Math.floor(x.max / 2))), 'craft')}>Half</button>
         </div>
         {#if v.fabs > 0}
           <div class="auto">

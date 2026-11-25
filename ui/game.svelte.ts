@@ -5,6 +5,8 @@
 import {
   WORLD, advanceAsync, createState, deserialize, emptyReport, serialize, splitOffline, summarize, tick, type GameState, type Report,
 } from '../sim';
+import { season as seasonOf } from '../sim';
+import { setHidden, setSeason, setVolumes, sfx, unlock, type Sfx } from './audio';
 
 const SAVE_KEY = 'aphelion.save.v1';
 const MAX_CATCHUP_LIVE = 60; // seconds handled silently by the live loop
@@ -61,11 +63,18 @@ export function R(): Report {
   return engine.report;
 }
 
-/** Call after any player action so the UI refreshes immediately. */
-export function act<T>(fn: (s: GameState) => T): T {
+/** Call after any player action so the UI refreshes immediately. Plays `sound` if the action did something. */
+export function act<T>(fn: (s: GameState) => T, sound?: Sfx): T {
   const out = fn(engine.state);
   ui.t++;
+  if (sound && out !== false && out !== 0) sfx(sound);
+  syncAudio();
   return out;
+}
+
+export function syncAudio(): void {
+  const st = engine.state.settings;
+  setVolumes(st.music ?? 0.5, st.sfx ?? 0.7);
 }
 
 // ---------------------------------------------------------------- persistence
@@ -138,6 +147,7 @@ function frame(now: number) {
   if (ticks) {
     ui.t++;
     collectToasts();
+    setSeason(seasonOf(s).id);
   }
 }
 
@@ -153,6 +163,7 @@ function collectToasts() {
   lastLogTop = log[0];
   for (const e of fresh.reverse()) {
     if (e.kind === 'info' && !e.text.startsWith('Research')) continue;
+    sfx(e.kind === 'event' ? 'event' : e.kind === 'story' ? 'story' : e.kind === 'info' ? 'research' : 'story');
     const id = ++toastId;
     ui.toasts = [...ui.toasts.slice(-2), { id, text: e.text, kind: e.kind }];
     setTimeout(() => (ui.toasts = ui.toasts.filter((t) => t.id !== id)), 5000);
@@ -194,11 +205,17 @@ export async function start(): Promise<void> {
   }
   running = true;
   lastWall = Date.now();
+  syncAudio();
+  // Browsers only start audio after a gesture; any tap unlocks it.
+  const wake = () => { if (engine.state.settings.seenIntro) unlock(); };
+  window.addEventListener('pointerdown', wake, { passive: true });
+  window.addEventListener('keydown', wake);
   requestAnimationFrame(frame);
   setInterval(save, 15000);
 
   // Phones suspend background tabs. Save when hidden, catch up when we come back.
   document.addEventListener('visibilitychange', async () => {
+    setHidden(document.visibilityState === 'hidden');
     if (document.visibilityState === 'hidden') {
       save();
     } else {

@@ -4,6 +4,7 @@
   import { buildingVisible, hint, n } from '../util';
   import BuildingCard from './BuildingCard.svelte';
   import EventCard from './EventCard.svelte';
+  import ColonyScene from './ColonyScene.svelte';
   import Icon from './Icon.svelte';
   import { hold } from '../util';
 
@@ -29,6 +30,8 @@
   let taps = $state(0);
 </script>
 
+<ColonyScene />
+
 {#if tip}
   <div class="hint" role="status"><Icon name="spark" size={16} /><span>{tip}</span></div>
 {/if}
@@ -43,7 +46,7 @@
       <div class="sv-title">Scavenge the wreck</div>
       <div class="muted num sv-sub">Scrap {n(S(), scrap, 0)} / {n(S(), scrapCap, 0)}</div>
     </div>
-    <button class="btn primary big" use:hold={() => { act(scavenge); taps++; }} aria-label="Scavenge for scrap">
+    <button class="btn primary big" use:hold={() => { act(scavenge, 'scavenge'); taps++; }} aria-label="Scavenge for scrap">
       <Icon name="hand" size={20} /> Scavenge
       {#key taps}{#if taps > 0}<span class="plus" aria-hidden="true">+1</span>{/if}{/key}
     </button>

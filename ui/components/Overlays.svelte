@@ -2,6 +2,7 @@
   import { ui, S, act } from '../game.svelte';
   import { fmtTime } from '../../sim';
   import { n, name } from '../util';
+  import { unlock } from '../audio';
 
   const intro = $derived(!S().settings.seenIntro);
   const away = $derived(ui.away);
@@ -41,7 +42,7 @@
       <h1>APHELION</h1>
       <p>The escape pod is dead. Three of you made it out. The sun is small and very far away.</p>
       <p class="muted">Scavenge the wreck, give everyone a job, and keep them fed and warm. Winter comes every few minutes. Growth is yours to shape.</p>
-      <button class="btn primary wide" onclick={() => act((s) => (s.settings.seenIntro = true))}>Begin</button>
+      <button class="btn primary wide" onclick={() => { act((s) => (s.settings.seenIntro = true)); unlock(); }}>Begin</button>
     </div>
   </div>
 {/if}
@@ -59,7 +60,7 @@
     position: fixed; inset: 0; z-index: 60; background: rgba(6, 7, 9, 0.82); backdrop-filter: blur(4px);
     display: grid; place-items: center; padding: calc(16px + var(--safe-top)) 16px calc(16px + var(--safe-bottom));
   }
-  .panel { width: min(460px, 100%); background: var(--panel); border: 1px solid var(--line-2); border-radius: 16px; padding: 22px; max-height: 100%; overflow-y: auto; }
+  .panel { width: min(460px, 100%); background: var(--solid); border: 1px solid var(--line-2); border-radius: 16px; padding: 22px; max-height: 100%; overflow-y: auto; }
   h2 { margin: 0 0 8px; }
   p { font-size: 14px; margin: 0 0 12px; }
   .wide { width: 100%; margin-top: 8px; }
