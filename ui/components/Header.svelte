@@ -3,6 +3,7 @@
   import { fmtTime } from '../../sim';
   import { seasonInfo } from '../util';
   import Icon from './Icon.svelte';
+  import { reloadToLatest } from '../update';
 
   const info = $derived(seasonInfo(S()));
   const chrono = $derived(S().chrono);
@@ -32,6 +33,12 @@
         <Icon name="clock" size={16} /> <span class="num">{fmtTime(chrono)}</span>{overdrive ? ' 3×' : ''}
       </button>
     {/if}
+    <button class="btn icon ghost reload" class:spin={ui.reloading} onclick={reloadToLatest}
+      aria-label={ui.updateAvailable ? 'Update available: reload to the latest version' : 'Reload the app'}
+      title={ui.updateAvailable ? 'Update available — tap to load it' : 'Reload the latest version'}>
+      <Icon name="reload" />
+      {#if ui.updateAvailable}<span class="upd" aria-hidden="true"></span>{/if}
+    </button>
     <button class="btn icon ghost phone-only" onclick={() => (ui.sheet = { kind: 'stores' })} aria-label="Stores"><Icon name="stores" /></button>
     <button class="btn icon ghost no-wide" onclick={() => (ui.sheet = { kind: 'log' })} aria-label="Colony log"><Icon name="log" /></button>
     <button class="btn icon ghost" onclick={() => (ui.sheet = { kind: 'settings' })} aria-label="Settings"><Icon name="settings" /></button>
@@ -68,6 +75,15 @@
   .sname { font-weight: 600; }
   .yr { color: var(--muted); font-size: 12px; }
   .actions { display: flex; align-items: center; gap: 2px; }
+  .reload { position: relative; }
+  .upd {
+    position: absolute; top: 4px; right: 4px; width: 9px; height: 9px; border-radius: 50%;
+    background: var(--good); box-shadow: 0 0 0 2px var(--panel), 0 0 8px var(--good);
+    animation: updpulse 1.8s ease-in-out infinite;
+  }
+  @keyframes updpulse { 50% { transform: scale(1.25); } }
+  .spin :global(svg) { animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .chrono { color: var(--cold); border-color: rgba(116, 182, 255, 0.35); }
   .chrono.on { background: rgba(116, 182, 255, 0.15); }
   .brand > div { min-width: 0; }

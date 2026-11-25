@@ -8,6 +8,7 @@
   import Icon from './Icon.svelte';
   import type { Notation } from '../../sim';
   import { sfx } from '../audio';
+  import { BUILD_ID, BUILD_TIME, reloadToLatest } from '../update';
 
   const sheet = $derived(ui.sheet);
   function close() { ui.sheet = null; }
@@ -165,6 +166,10 @@
             <button class="btn small danger" onclick={() => { hardReset(); close(); }}>Erase</button>
           </div>
         {/if}
+        <h3>App version</h3>
+        <p class="small">Version <span class="num">{BUILD_ID}</span>{#if BUILD_TIME} · built {new Date(BUILD_TIME).toLocaleString()}{/if}
+          {#if ui.updateAvailable}<br /><strong class="good">A newer version is available.</strong>{/if}</p>
+        <button class="btn small" onclick={reloadToLatest}>{ui.updateAvailable ? 'Load the new version' : 'Reload app'}</button>
         <p class="faint small about">Aphelion · Era I preview. Offline progress: full for 12h, then declining up to 7 days; the rest becomes stored time.</p>
       {:else if sheet.kind === 'rebuild'}
         <p>Everything in this run resets: survivors, buildings, research{(S().prestige.perks.recall ?? 0) > 0 ? ' (except what Recall keeps)' : ''}, stores and doctrine.</p>

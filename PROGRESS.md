@@ -19,6 +19,9 @@
 - **Audio** (`ui/audio.ts`, Web Audio, no files): generative ambient score (slow pad chords, bell motifs, wind that rises in
   winter) and synthesized effects for scavenge, build, craft, research, events, story beats, Rebuild and Ascension.
   Music/effects volume sliders in Settings; starts on first tap, pauses when the app is hidden.
+- **Updates**: reload button in the header (saves, clears cached files, loads the newest build); a green dot appears when
+  the deployed `version.json` differs from the running build (checked on start, every 5 min, on return and when back online).
+  Service worker is network-first for pages, cache-first for hashed assets. Version shown in Settings.
 - **Deploy**: GitHub Pages workflow on push to `main` → https://beermarkus-tech.github.io/Aphelion/
 - **Balance** (`npm run sim`): first Rebuild 31 min; doctrine ~1h45; Ascension 2d1h–2d13h casual; doctrine spread 13.4%.
 

@@ -45,6 +45,8 @@ export const ui = $state({
   away: null as AwayReport | null,
   toasts: [] as Toast[],
   saveError: '' as string,
+  updateAvailable: false,
+  reloading: false,
 });
 
 export const engine = {
